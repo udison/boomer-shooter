@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgghyseoksnk3"]
+
+[ext_resource type="Material" uid="uid://sejl02qieb2y" path="res://materials/debug/grid01.tres" id="1_3sff5"]
+
+[sub_resource type="Environment" id="Environment_46nc3"]
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_46nc3")
+
+[node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.676092, 0.626162, -0.388358, 0, 0.527074, 0.849819, 0.736817, -0.574556, 0.356351, 0, 3.47904, 0)
+
+[node name="Combiner" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+use_collision = true
+collision_layer = 4
+collision_mask = 3
+size = Vector3(10, 0.1, 10)
+material = ExtResource("1_3sff5")
