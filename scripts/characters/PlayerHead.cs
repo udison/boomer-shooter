@@ -29,20 +29,21 @@ public partial class PlayerHead : Node3D
 	private void HeadBob(double delta) {
 		if (!enableHeadBob) return;
 
+		Vector3 target = Vector3.Zero;
+
 		if (player.GetPlanarMotion().Length() > 0) {
 			time += (float)delta;
 
-			Vector3 target = new Vector3(
+			target = new Vector3(
 				Position.X,
 				MathF.Sin(time * frequency) * amplitude,
 				Position.Z
 			);
-
-			camera.Position = camera.Position.Lerp(target, (float)delta);
 		}
 		else {
 			time = 0;
-			camera.Position = camera.Position.Lerp(Vector3.Zero, (float)delta);
 		}
+
+		camera.Position = camera.Position.Lerp(target, (float)delta);
 	}
 }
