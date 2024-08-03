@@ -6,7 +6,7 @@ public partial class Player : Entity
 	private static float MAX_HEAD_ROTATION = 89.0f;
 
 	[ExportGroup("Mouse and Keyboard")]
-	[Export(PropertyHint.Range, "0.1, 5.0, 0.1")] private float sensitivity = .1f;
+	[Export(PropertyHint.Range, "0.01, 5.0, 0.1")] private float sensitivity = .1f;
 
 	#region Nodes
 	private Node3D head;
@@ -38,7 +38,6 @@ public partial class Player : Entity
 	private void HandleInput() {
 		Vector2 inputDir = Input.GetVector("left", "right", "forward", "backward");
 		motion = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
-		GD.Print(motion);
 
 		// Handle Jump
 		if (Input.IsActionJustPressed("jump") && IsOnFloor())

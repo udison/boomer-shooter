@@ -5,6 +5,7 @@ public partial class Entity : CharacterBody3D
 {
 
     /// <summary>The speed in which this entity moves</summary>
+	[ExportCategory("Movement")]
     [Export] protected float speed = 5.0f;
 
     /// <summary>How tall this entity jumps</summary>
@@ -12,11 +13,28 @@ public partial class Entity : CharacterBody3D
 
     protected Vector3 motion = Vector3.Zero;
 
+	#region Lifecycle Hooks
+
     public override void _PhysicsProcess(double delta)
     {
         ApplyGravity(delta);
         Move(delta);
     }
+
+	#endregion
+
+
+	#region Public Methods
+
+	/// <summary>Returns the planar speed the entity is moving</summary>
+	public Vector2 GetPlanarMotion() {
+		return new Vector2(motion.X, motion.Z);
+	}
+
+	#endregion
+
+
+	#region Protected Methods
 
     protected void ApplyGravity(double delta) {
 		if (!IsOnFloor())
@@ -42,4 +60,6 @@ public partial class Entity : CharacterBody3D
 		Velocity = velocity;
         MoveAndSlide();
     }
+
+	#endregion
 }
