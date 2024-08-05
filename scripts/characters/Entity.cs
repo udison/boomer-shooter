@@ -13,12 +13,17 @@ public partial class Entity : CharacterBody3D
 
     protected Vector3 motion = Vector3.Zero;
 
+	private double physicsDelta = 0;
+
 	#region Lifecycle Hooks
 
     public override void _PhysicsProcess(double delta)
     {
+		physicsDelta = delta;
+
         ApplyGravity(delta);
         Move(delta);
+		GD.Print(Velocity);
     }
 
 	#endregion
@@ -34,6 +39,17 @@ public partial class Entity : CharacterBody3D
 	/// <summary>Returns the planar speed the entity is moving</summary>
 	public Vector2 GetPlanarMotion() {
 		return new Vector2(motion.X, motion.Z);
+	}
+
+	/// <summary>Makes this entity jump, if it is on floor</summary>
+	public void Jump() {
+		if (IsOnFloor()) {
+			Vector3 velocity = Velocity;
+
+			velocity.Y = jumpVelocity;
+
+			Velocity = velocity;
+		}
 	}
 
 	#endregion

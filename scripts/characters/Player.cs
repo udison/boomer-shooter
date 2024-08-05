@@ -23,7 +23,6 @@ public partial class Player : Entity
 
     public override void _Input(InputEvent @event)
     {
-		HandleInput();
 		if (@event is InputEventMouseMotion mouseEvent) {
         	Look(mouseEvent.Relative);
 		}
@@ -31,6 +30,7 @@ public partial class Player : Entity
 
     public override void _PhysicsProcess(double delta)
 	{
+		HandleInput();
 
 		base._PhysicsProcess(delta);
 	}
@@ -40,9 +40,9 @@ public partial class Player : Entity
 		motion = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
 		// Handle Jump
-		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+		if (Input.IsActionJustPressed("jump"))
 		{
-			motion.Y = jumpVelocity;
+			Jump();
 		}
 	}
 
