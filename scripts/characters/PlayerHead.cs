@@ -13,8 +13,8 @@ public partial class PlayerHead : Node3D
 	[ExportCategory("Head Bob")]
 	[Export] public bool enableHeadBob = true;
 	private float time = 0;
-	private float amplitude = 0.1f;
-	private float frequency = 5;
+	private float amplitude = 0.05f;
+	private float frequency = 15;
 
 	public override void _Ready() {
 		player = GetParent<Player>();
@@ -29,21 +29,26 @@ public partial class PlayerHead : Node3D
 	private void HeadBob(double delta) {
 		if (!enableHeadBob) return;
 
-		Vector3 target = Vector3.Zero;
+		float planarSpeed = player.GetPlanarMotion().Length();
 
-		if (player.GetPlanarMotion().Length() > 0) {
+		if (planarSpeed > 0) {
 			time += (float)delta;
 
-			target = new Vector3(
+			float targetFrequency = frequency * (planarSpeed / player.GetMaxSpeed());
+
+			camera.Position = new Vector3(
 				Position.X,
-				MathF.Sin(time * frequency) * amplitude,
+				MathF.Sin(time * targetFrequency) * amplitude,
 				Position.Z
 			);
 		}
 		else {
 			time = 0;
+			camera.Position = camera.Position.Lerp(Vector3.Zero, (float)delta * 3);
+			
+			if (camera.Position.DistanceTo(Vector3.Zero) <= .001f) {
+				camera.Position = Vector3.Zero;
+			}
 		}
-
-		camera.Position = camera.Position.Lerp(target, (float)delta);
 	}
 }

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdsykix2gey6w"]
+[gd_scene load_steps=5 format=3 uid="uid://bdsykix2gey6w"]
 
 [ext_resource type="Script" path="res://scripts/characters/Player.cs" id="1_j3uwf"]
 [ext_resource type="Script" path="res://scripts/characters/PlayerHead.cs" id="2_01xf4"]
+[ext_resource type="PackedScene" uid="uid://bh8rfsknticpd" path="res://scenes/items/weapon_base.tscn" id="3_fj0xv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mlv1t"]
 radius = 0.3
@@ -20,3 +21,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
 script = ExtResource("2_01xf4")
 
 [node name="Camera" type="Camera3D" parent="Head"]
+
+[node name="Weapon" parent="Head/Camera" instance=ExtResource("3_fj0xv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.129047, -0.187278)

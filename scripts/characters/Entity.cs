@@ -26,6 +26,11 @@ public partial class Entity : CharacterBody3D
 
 	#region Public Methods
 
+	/// <summary>Returns the max speed (this.speed) of this entity</summary>
+	public float GetMaxSpeed() {
+		return speed;
+	}
+
 	/// <summary>Returns the planar speed the entity is moving</summary>
 	public Vector2 GetPlanarMotion() {
 		return new Vector2(motion.X, motion.Z);

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bh8rfsknticpd"]
+
+[node name="Weapon" type="Node3D"]
+
+[node name="Mesh" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Mesh"]
+size = Vector3(0.0407715, 0.1, 0.3)
