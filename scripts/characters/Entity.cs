@@ -23,7 +23,6 @@ public partial class Entity : CharacterBody3D
 
         ApplyGravity(delta);
         Move(delta);
-		GD.Print(Velocity);
     }
 
 	#endregion

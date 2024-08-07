@@ -6,6 +6,8 @@ public partial class Weapon : Node3D
 	[Export] protected string displayName = "";
 	[Export] protected float damage = 10.0f;
 
+	protected EWeaponState state = EWeaponState.DRAWING;
+
 	#region Nodes
 	protected AnimationPlayer animationPlayer;
     #endregion
@@ -19,7 +21,9 @@ public partial class Weapon : Node3D
 
     public override void _Input(InputEvent @event)
     {
-        base._Input(@event);
+        if (Input.IsActionJustPressed("primary")) {
+			Attack();
+		}
     }
 
     protected void PlayAnimation(EWeaponAnimation anim) {
@@ -38,7 +42,14 @@ public partial class Weapon : Node3D
 		animationPlayer.Play(animName);
 	}
 
+	protected void OnDrawEnd() {
+		GD.Print("draw! now bang pow pow");
+		state = EWeaponState.READY;
+	}
+
 	public void Attack() {
+		if (state != EWeaponState.READY) return;
+
 		PlayAnimation(EWeaponAnimation.ATTACK);
 	}
 }
