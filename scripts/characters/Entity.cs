@@ -67,8 +67,13 @@ public partial class Entity : CharacterBody3D
 
         if (motion != Vector3.Zero)
 		{
-			velocity.X = motion.X * speed;
-			velocity.Z = motion.Z * speed;
+			// velocity.X = motion.X * speed;
+			// velocity.Z = motion.Z * speed;
+
+			Vector3 target = (Transform.Basis * motion).Normalized() * speed;
+			
+			velocity.X = target.X;
+			velocity.Z = target.Z;
 		}
 		else
 		{

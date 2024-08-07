@@ -37,7 +37,8 @@ public partial class Player : Entity
 
 	private void HandleInput() {
 		Vector2 inputDir = Input.GetVector("left", "right", "forward", "backward");
-		motion = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+		// motion = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+		motion = new Vector3(inputDir.X, 0, inputDir.Y);
 
 		// Handle Jump
 		if (Input.IsActionJustPressed("jump"))

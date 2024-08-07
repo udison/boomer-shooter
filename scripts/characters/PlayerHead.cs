@@ -19,7 +19,7 @@ public partial class PlayerHead : Node3D
 	/// <summary>Enable or disable head bob</summary>
 	[ExportCategory("Head Tilt")]
 	[Export] public bool enableHeadTilt = true;
-	private float headTiltAngle = 2.0f;
+	private float headTiltAngle = 4.0f;
 
 	public override void _Ready() {
 		player = GetParent<Player>();
