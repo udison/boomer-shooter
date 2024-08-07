@@ -58,8 +58,7 @@ public partial class Entity : CharacterBody3D
 	#region Protected Methods
 
     protected void ApplyGravity(double delta) {
-		if (!IsOnFloor())
-		{
+		if (!IsOnFloor()) {
 			Velocity += GetGravity() * (float)delta;
 		}
     }

@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://bh8rfsknticpd"]
+[gd_scene load_steps=2 format=3 uid="uid://bh8rfsknticpd"]
+
+[ext_resource type="Script" path="res://scripts/combat/Weapon.cs" id="1_01ic2"]
 
 [node name="Weapon" type="Node3D"]
+script = ExtResource("1_01ic2")
 
 [node name="Mesh" type="CSGCombiner3D" parent="."]
 

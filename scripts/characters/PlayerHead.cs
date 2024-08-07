@@ -16,6 +16,11 @@ public partial class PlayerHead : Node3D
 	private float amplitude = 0.05f;
 	private float frequency = 15;
 
+	/// <summary>Enable or disable head bob</summary>
+	[ExportCategory("Head Tilt")]
+	[Export] public bool enableHeadTilt = true;
+	private float headTiltAngle = 2.0f;
+
 	public override void _Ready() {
 		player = GetParent<Player>();
 		camera = GetNode<Camera3D>("Camera");
@@ -24,6 +29,7 @@ public partial class PlayerHead : Node3D
 	public override void _PhysicsProcess(double delta)
 	{
 		HeadBob(delta);
+		HeadTilt(delta);
 	}
 
 	private void HeadBob(double delta) {
@@ -50,5 +56,15 @@ public partial class PlayerHead : Node3D
 				camera.Position = Vector3.Zero;
 			}
 		}
+	}
+
+	private void HeadTilt(double delta) {
+		if (!enableHeadTilt) return;
+
+		camera.Rotation = new Vector3(
+			camera.Rotation.X,
+			camera.Rotation.Y,
+			Mathf.Lerp(camera.Rotation.Z, -player.GetPlanarMotion().X * Mathf.DegToRad(headTiltAngle), (float)delta * 4.0f)
+		);
 	}
 }
