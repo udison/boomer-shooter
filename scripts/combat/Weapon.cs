@@ -39,6 +39,7 @@ public partial class Weapon : Node3D
 			return;
 		}
 
+		animationPlayer.Play("RESET");
 		animationPlayer.Play(animName);
 	}
 

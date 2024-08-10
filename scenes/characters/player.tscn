@@ -26,4 +26,3 @@ script = ExtResource("2_01xf4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.124, -0.307)
 
 [node name="Weapon" parent="Head/Camera/WeaponPosition" instance=ExtResource("3_ienkl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
