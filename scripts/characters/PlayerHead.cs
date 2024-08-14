@@ -30,8 +30,8 @@ public partial class PlayerHead : Node3D
 	[Export] public float swayRotation = -.005f;
 
 	[ExportCategory("Weapon Bob")]
-	[Export] public float weaponBobAmplitude = 3f;
-	[Export] public float weaponBobFrequency = 3f;
+	[Export] public float weaponBobAmplitude = .01f;
+	[Export] public float weaponBobFrequency = 15f;
 
 	public override void _Ready() {
 		player = GetParent<Player>();
