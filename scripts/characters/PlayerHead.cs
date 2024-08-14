@@ -6,6 +6,7 @@ public partial class PlayerHead : Node3D
 	#region Nodes
 	private Player player;
 	private Camera3D camera;
+	private Node3D weaponHolder;
 	#endregion
 
 
@@ -24,12 +25,14 @@ public partial class PlayerHead : Node3D
 	public override void _Ready() {
 		player = GetParent<Player>();
 		camera = GetNode<Camera3D>("Camera");
+		weaponHolder = camera.GetNode<Node3D>("WeaponHolder");
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		HeadBob(delta);
 		HeadTilt(delta);
+		WeaponTilt(delta);
 	}
 
 	private void HeadBob(double delta) {
@@ -67,4 +70,16 @@ public partial class PlayerHead : Node3D
 			Mathf.Lerp(camera.Rotation.Z, -player.GetPlanarMotion().X * Mathf.DegToRad(headTiltAngle), (float)delta * 4.0f)
 		);
 	}
+
+	private void WeaponTilt(double delta) {
+		// weapon_holder.rotation.z = lerp(weapon_holder.rotation.z, -input_x * weapon_rotation_amount * 10, 10 * delta)
+		Vector3 target = new Vector3(
+			weaponHolder.Rotation.X,
+			weaponHolder.Rotation.Y,
+			Mathf.Lerp(weaponHolder.Rotation.Z, -player.GetPlanarMotion().Normalized().X * 0.2f, (float)delta * 7)
+		);
+
+		weaponHolder.Rotation = target;
+	}
+
 }

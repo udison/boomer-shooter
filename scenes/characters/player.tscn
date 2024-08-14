@@ -25,10 +25,10 @@ script = ExtResource("2_01xf4")
 current = true
 fov = 90.0
 
-[node name="RightHand" type="Node3D" parent="Head/Camera"]
+[node name="WeaponHolder" type="Node3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.124, -0.35061)
 
-[node name="Weapon" parent="Head/Camera/RightHand" instance=ExtResource("3_ienkl")]
+[node name="Weapon" parent="Head/Camera/WeaponHolder" instance=ExtResource("3_ienkl")]
 
 [node name="Arms" parent="Head/Camera" instance=ExtResource("4_0er73")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.0880842, 0)
@@ -39,11 +39,11 @@ transform = Transform3D(0.0902174, 0, 0, 0, 0.0902174, 0, 0, 0, 0.0902174, 9.960
 [node name="IK_R_Arm" parent="Head/Camera/Arms/HumanArm/Skeleton3D" index="1"]
 use_magnet = true
 magnet = Vector3(-2.415, -2.17, 0)
-target_node = NodePath("../../../../RightHand/Weapon/TGT_R_Palm")
+target_node = NodePath("../../../../WeaponHolder/Weapon/TGT_R_Palm")
 
 [node name="BerettaM9" parent="Head/Camera/Arms" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[editable path="Head/Camera/RightHand/Weapon"]
-[editable path="Head/Camera/RightHand/Weapon/Mesh"]
+[editable path="Head/Camera/WeaponHolder/Weapon"]
+[editable path="Head/Camera/WeaponHolder/Weapon/Mesh"]
 [editable path="Head/Camera/Arms"]
