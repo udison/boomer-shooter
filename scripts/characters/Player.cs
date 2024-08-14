@@ -12,11 +12,11 @@ public partial class Player : Entity
 	private Node3D head;
     #endregion
 
+	private Vector2 lookInput = Vector2.Zero;
+
     public override void _Ready()
     {
         base._Ready();
-
-		Input.MouseMode = Input.MouseModeEnum.Captured;
 
 		head = GetNode<Node3D>("Head");
     }
@@ -35,6 +35,10 @@ public partial class Player : Entity
 		base._PhysicsProcess(delta);
 	}
 
+	public Vector2 GetLookInput() {
+		return lookInput;
+	}
+
 	private void HandleInput() {
 		Vector2 inputDir = Input.GetVector("left", "right", "forward", "backward");
 		motion = new Vector3(inputDir.X, 0, inputDir.Y);
@@ -47,6 +51,8 @@ public partial class Player : Entity
 	}
 
 	private void Look(Vector2 direction) {
+		lookInput = direction;
+
 		// Rotates player
 		RotateY(-Mathf.DegToRad(direction.X * sensitivity));
 

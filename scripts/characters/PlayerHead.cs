@@ -22,6 +22,13 @@ public partial class PlayerHead : Node3D
 	[Export] public bool enableHeadTilt = true;
 	private float headTiltAngle = 4.0f;
 
+	[ExportCategory("Weapon Tilt")]
+	[Export] public float weaponTiltMultiplier = .2f;
+	[Export] public float weaponTiltVelocity = 7f;
+
+	[ExportCategory("Weapon Sway")]
+	[Export] public float swayRotation = -.005f;
+
 	public override void _Ready() {
 		player = GetParent<Player>();
 		camera = GetNode<Camera3D>("Camera");
@@ -33,6 +40,7 @@ public partial class PlayerHead : Node3D
 		HeadBob(delta);
 		HeadTilt(delta);
 		WeaponTilt(delta);
+		WeaponSway(delta);
 	}
 
 	private void HeadBob(double delta) {
@@ -72,11 +80,26 @@ public partial class PlayerHead : Node3D
 	}
 
 	private void WeaponTilt(double delta) {
-		// weapon_holder.rotation.z = lerp(weapon_holder.rotation.z, -input_x * weapon_rotation_amount * 10, 10 * delta)
 		Vector3 target = new Vector3(
 			weaponHolder.Rotation.X,
 			weaponHolder.Rotation.Y,
-			Mathf.Lerp(weaponHolder.Rotation.Z, -player.GetPlanarMotion().Normalized().X * 0.2f, (float)delta * 7)
+			Mathf.Lerp(
+				weaponHolder.Rotation.Z,
+				-player.GetPlanarMotion().Normalized().X * weaponTiltMultiplier,
+				(float)delta * weaponTiltVelocity
+			)
+		);
+
+		weaponHolder.Rotation = target;
+	}
+
+	private void WeaponSway(double delta) {
+		Vector2 lookInput = player.GetLookInput().Lerp(Vector2.Zero, 10 * (float)delta);
+
+		Vector3 target = new Vector3(
+			Mathf.Lerp(weaponHolder.Rotation.X, lookInput.Y * swayRotation, (float)delta * 5.0f),
+			Mathf.Lerp(weaponHolder.Rotation.Y, lookInput.X * swayRotation, (float)delta * 5.0f),
+			weaponHolder.Rotation.Z
 		);
 
 		weaponHolder.Rotation = target;
