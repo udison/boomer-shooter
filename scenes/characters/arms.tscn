@@ -1276,5 +1276,4 @@ libraries = {
 autoplay = "PISTOL"
 
 [node name="BerettaM9" parent="." index="2" instance=ExtResource("2_6nyyv")]
-transform = Transform3D(-4.37114e-08, 0, 1, 1, -4.37114e-08, 4.37114e-08, 4.37114e-08, 1, 1.91069e-15, -0.721522, -0.0112942, 0.0382511)
 visible = false
