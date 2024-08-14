@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdsykix2gey6w"]
+[gd_scene load_steps=7 format=3 uid="uid://bdsykix2gey6w"]
 
 [ext_resource type="Script" path="res://scripts/characters/Player.cs" id="1_j3uwf"]
 [ext_resource type="Script" path="res://scripts/characters/PlayerHead.cs" id="2_01xf4"]
+[ext_resource type="Script" path="res://scripts/characters/WeaponHolder.cs" id="3_bbgko"]
 [ext_resource type="PackedScene" uid="uid://8jbcx328wa53" path="res://scenes/items/beretta_m9.tscn" id="3_ienkl"]
 [ext_resource type="PackedScene" uid="uid://bwht01rnbphya" path="res://scenes/characters/arms.tscn" id="4_0er73"]
 
@@ -27,6 +28,7 @@ fov = 90.0
 
 [node name="WeaponHolder" type="Node3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.124, -0.35061)
+script = ExtResource("3_bbgko")
 
 [node name="Weapon" parent="Head/Camera/WeaponHolder" instance=ExtResource("3_ienkl")]
 

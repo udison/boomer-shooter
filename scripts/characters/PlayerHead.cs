@@ -6,7 +6,7 @@ public partial class PlayerHead : Node3D
 	#region Nodes
 	private Player player;
 	private Camera3D camera;
-	private Node3D weaponHolder;
+	private WeaponHolder weaponHolder;
 	#endregion
 
 
@@ -29,10 +29,14 @@ public partial class PlayerHead : Node3D
 	[ExportCategory("Weapon Sway")]
 	[Export] public float swayRotation = -.005f;
 
+	[ExportCategory("Weapon Bob")]
+	[Export] public float weaponBobAmplitude = 3f;
+	[Export] public float weaponBobFrequency = 3f;
+
 	public override void _Ready() {
 		player = GetParent<Player>();
 		camera = GetNode<Camera3D>("Camera");
-		weaponHolder = camera.GetNode<Node3D>("WeaponHolder");
+		weaponHolder = camera.GetNode<WeaponHolder>("WeaponHolder");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -41,6 +45,7 @@ public partial class PlayerHead : Node3D
 		HeadTilt(delta);
 		WeaponTilt(delta);
 		WeaponSway(delta);
+		WeaponBob(delta);
 	}
 
 	private void HeadBob(double delta) {
@@ -103,6 +108,32 @@ public partial class PlayerHead : Node3D
 		);
 
 		weaponHolder.Rotation = target;
+	}
+
+	private void WeaponBob(double delta) {
+		// TODO: [OPTIMIZATION] calling this every physics frame is not good
+		Weapon weapon = weaponHolder.GetActiveWeapon();
+
+		if (weapon == null) return;
+
+		float planarSpeed = player.GetPlanarMotion().Length();
+
+		if (planarSpeed > 0) {
+			float targetFrequency = weaponBobFrequency * (planarSpeed / player.GetMaxSpeed());
+
+			weapon.Position = new Vector3(
+				Position.X,
+				MathF.Sin(time * targetFrequency) * weaponBobAmplitude,
+				Position.Z
+			);
+		}
+		else {
+			weapon.Position = weapon.Position.Lerp(Vector3.Zero, (float)delta * 3);
+			
+			if (weapon.Position.DistanceTo(Vector3.Zero) <= .001f) {
+				weapon.Position = Vector3.Zero;
+			}
+		}
 	}
 
 }
