@@ -14,7 +14,7 @@ public partial class PlayerHead : Node3D
 	[Export] public bool enableHeadBob = true;
 	private float time = 0;
 	private float amplitude = 0.05f;
-	private float frequency = 15;
+	private float frequency = 50;
 
 	/// <summary>Enable or disable head bob</summary>
 	[ExportCategory("Head Tilt")]
