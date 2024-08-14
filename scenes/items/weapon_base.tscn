@@ -5,16 +5,4 @@
 [node name="Weapon" type="Node3D"]
 script = ExtResource("1_01ic2")
 
-[node name="Mesh" type="CSGCombiner3D" parent="."]
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0260376, 0)
-size = Vector3(0.0407715, 0.0479248, 0.3)
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="Mesh/CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02789, -0.125215)
-size = Vector3(0.0078125, 0.00905151, 0.0334351)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, 0.970871, 0.239601, 0, -0.239601, 0.970871, 0, -0.0375307, 0.127069)
-size = Vector3(0.0341797, 0.0960175, 0.0459961)
+[node name="FireRateTimer" type="Timer" parent="."]

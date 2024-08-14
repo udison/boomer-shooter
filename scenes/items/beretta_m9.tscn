@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://8jbcx328wa53"]
+
+[ext_resource type="PackedScene" uid="uid://bh8rfsknticpd" path="res://scenes/items/weapon_base.tscn" id="1_mep8o"]
+[ext_resource type="PackedScene" uid="uid://boa60pmvng255" path="res://assets/models/weapons/beretta_m9.tscn" id="2_cvypp"]
+
+[node name="BerettaM9" instance=ExtResource("1_mep8o")]
+
+[node name="Mesh" parent="." index="1" instance=ExtResource("2_cvypp")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)

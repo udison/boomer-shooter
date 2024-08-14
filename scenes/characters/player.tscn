@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdsykix2gey6w"]
+[gd_scene load_steps=6 format=3 uid="uid://bdsykix2gey6w"]
 
 [ext_resource type="Script" path="res://scripts/characters/Player.cs" id="1_j3uwf"]
 [ext_resource type="Script" path="res://scripts/characters/PlayerHead.cs" id="2_01xf4"]
-[ext_resource type="PackedScene" uid="uid://8jbcx328wa53" path="res://scenes/items/pistol.tscn" id="3_ienkl"]
+[ext_resource type="PackedScene" uid="uid://8jbcx328wa53" path="res://scenes/items/beretta_m9.tscn" id="3_ienkl"]
+[ext_resource type="PackedScene" uid="uid://bwht01rnbphya" path="res://scenes/characters/arms.tscn" id="4_0er73"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mlv1t"]
 radius = 0.3
@@ -21,8 +22,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
 script = ExtResource("2_01xf4")
 
 [node name="Camera" type="Camera3D" parent="Head"]
+current = true
+fov = 90.0
 
-[node name="WeaponPosition" type="Node3D" parent="Head/Camera"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.124, -0.307)
+[node name="Weapon" parent="Head/Camera" instance=ExtResource("3_ienkl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.124, -0.416049)
 
-[node name="Weapon" parent="Head/Camera/WeaponPosition" instance=ExtResource("3_ienkl")]
+[node name="TGT_R_Palm" type="Marker3D" parent="Head/Camera/Weapon"]
+transform = Transform3D(0.118924, -4.34012e-08, 0.992903, -0.992903, -5.19833e-09, 0.118924, 0, -1, -4.37114e-08, 0.0154288, -0.0422736, 0.157672)
+
+[node name="TGT_R_Elbow" type="Marker3D" parent="Head/Camera/Weapon"]
+transform = Transform3D(-4.37114e-08, -4.37114e-08, 1, -1, 1.91069e-15, -4.37114e-08, 0, -1, -4.37114e-08, 0.0129309, -0.202557, 0.232156)
+
+[node name="Arms" parent="Head/Camera" instance=ExtResource("4_0er73")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.0880842, 0)
+
+[node name="HumanArm" parent="Head/Camera/Arms" index="0"]
+transform = Transform3D(0.0902174, 0, 0, 0, 0.0902174, 0, 0, 0, 0.0902174, 9.96094e-09, 0, -0.11394)
+
+[node name="IK_R_Arm" parent="Head/Camera/Arms/HumanArm/Skeleton3D" index="1"]
+use_magnet = true
+magnet = Vector3(-2.415, -2.17, 0)
+target_node = NodePath("../../../../Weapon/TGT_R_Palm")
+
+[editable path="Head/Camera/Arms"]

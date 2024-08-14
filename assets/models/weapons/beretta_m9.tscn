@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://boa60pmvng255"]
+
+[ext_resource type="PackedScene" uid="uid://sudo7glgf5j4" path="res://assets/models/weapons/beretta_m9.glb" id="1_ep2nf"]
+
+[node name="beretta_m9" instance=ExtResource("1_ep2nf")]
