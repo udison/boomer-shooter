@@ -28,13 +28,16 @@ public partial class PlayerHead : Node3D
 	[ExportCategory("Weapon Tilt")]
 	[Export] public float weaponTiltMultiplier = .2f;
 	[Export] public float weaponTiltVelocity = 7f;
+	[Export] public float weaponTiltAimMultiplier = .2f;
 
 	[ExportCategory("Weapon Sway")]
 	[Export] public float swayRotation = -.005f;
+	[Export] public float swayAimMultiplier = .2f;
 
 	[ExportCategory("Weapon Bob")]
 	[Export] public float weaponBobAmplitude = .01f;
-	[Export] public float weaponBobFrequency = 15f;
+	[Export] public float weaponBobFrequency = 30f;
+	[Export] public float weaponBobAimMultiplier = .2f;
 
 	/// <summary>Duration of the aiming transition in seconds</summary>
 	[ExportCategory("Aiming")]
@@ -116,7 +119,7 @@ public partial class PlayerHead : Node3D
 			weaponHolder.Rotation.Y,
 			Mathf.Lerp(
 				weaponHolder.Rotation.Z,
-				-player.GetPlanarMotion().Normalized().X * weaponTiltMultiplier,
+				-player.GetPlanarMotion().Normalized().X * weaponTiltMultiplier * (isAiming ? weaponTiltAimMultiplier : 1),
 				(float)delta * weaponTiltVelocity
 			)
 		);
@@ -128,8 +131,8 @@ public partial class PlayerHead : Node3D
 		Vector2 lookInput = player.GetLookInput().Lerp(Vector2.Zero, 10 * (float)delta);
 
 		Vector3 target = new Vector3(
-			Mathf.Lerp(weaponHolder.Rotation.X, lookInput.Y * swayRotation, (float)delta * 5.0f),
-			Mathf.Lerp(weaponHolder.Rotation.Y, lookInput.X * swayRotation, (float)delta * 5.0f),
+			Mathf.Lerp(weaponHolder.Rotation.X, lookInput.Y * swayRotation * (isAiming ? swayAimMultiplier : 1), (float)delta * 5.0f),
+			Mathf.Lerp(weaponHolder.Rotation.Y, lookInput.X * swayRotation * (isAiming ? swayAimMultiplier : 1), (float)delta * 5.0f),
 			weaponHolder.Rotation.Z
 		);
 
@@ -149,7 +152,7 @@ public partial class PlayerHead : Node3D
 
 			weapon.Position = new Vector3(
 				Position.X,
-				MathF.Sin(time * targetFrequency) * weaponBobAmplitude,
+				MathF.Sin(time * targetFrequency) * weaponBobAmplitude * (isAiming ? weaponBobAimMultiplier : 1),
 				Position.Z
 			);
 		}

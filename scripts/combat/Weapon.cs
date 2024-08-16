@@ -10,7 +10,7 @@ public partial class Weapon : Node3D
 	[Export] protected int clipSize = 16;
 	[Export] protected int remainingAmmo = 320;
 	[Export] protected Vector3 aimingPosition = new Vector3(0.003f, -.054f, -.226f);
-	[Export] protected Godot.Collections.Array<GpuParticles3D> particles = new Godot.Collections.Array<GpuParticles3D>();
+	[Export] protected Godot.Collections.Array<GpuParticles3D> attackParticles = new Godot.Collections.Array<GpuParticles3D>();
 
 	protected EWeaponState state = EWeaponState.DRAWING;
 
@@ -72,6 +72,14 @@ public partial class Weapon : Node3D
 		SetState(EWeaponState.ATTACKING);
 		PlayAnimation(EWeaponAnimation.ATTACK);
 		fireRateTimer.Start();
+		EmitAttackParticles();
+	}
+
+	public void EmitAttackParticles() {
+		// TODO: Change this to instantiate a rigid body because godot's particle system are complete garbage
+		// foreach (GpuParticles3D particle in attackParticles) {
+		// 	particle.Restart();
+		// }
 	}
 
 	#region Callbacks
