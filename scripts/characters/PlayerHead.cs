@@ -6,7 +6,10 @@ public partial class PlayerHead : Node3D
 	#region Nodes
 	private Player player;
 	private Camera3D camera;
+	private Node3D stancePosition;
 	private WeaponHolder weaponHolder;
+	private Node3D readyPosition;
+	private Node3D safePosition;
 	#endregion
 
 
@@ -33,19 +36,35 @@ public partial class PlayerHead : Node3D
 	[Export] public float weaponBobAmplitude = .01f;
 	[Export] public float weaponBobFrequency = 15f;
 
+	[ExportCategory("Weapon Bob")]
+	[Export] public float aimVelocity = 5f;
+	private bool isAiming = false;
+	private Vector3 currentAimOffset = Vector3.Zero;
+
 	public override void _Ready() {
 		player = GetParent<Player>();
 		camera = GetNode<Camera3D>("Camera");
-		weaponHolder = camera.GetNode<WeaponHolder>("WeaponHolder");
+		stancePosition = camera.GetNode<Node3D>("StancePosition");
+		weaponHolder = stancePosition.GetNode<WeaponHolder>("WeaponHolder");
+		readyPosition = camera.GetNode<Node3D>("ReadyPosition");
+		safePosition = camera.GetNode<Node3D>("SafePosition");
 	}
 
-	public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("secondary")) {
+			ToggleAim();
+		}
+    }
+
+    public override void _PhysicsProcess(double delta)
 	{
 		HeadBob(delta);
 		HeadTilt(delta);
 		WeaponTilt(delta);
 		WeaponSway(delta);
 		WeaponBob(delta);
+		HandleAiming(delta);
 	}
 
 	private void HeadBob(double delta) {
@@ -134,6 +153,43 @@ public partial class PlayerHead : Node3D
 				weapon.Position = Vector3.Zero;
 			}
 		}
+	}
+
+	private void ToggleAim() {
+		// isAiming = !isAiming;
+
+		if (!isAiming) {
+			// Vector3 offset = ToLocal(weaponHolder.GetActiveWeapon().GetNode<Marker3D>("SightPosition").GlobalPosition);
+
+			// isAiming = true;
+			// currentAimOffset = offset;
+			// weaponHolder.GlobalPosition -= offset;
+
+			// 1. Set weapon position back to the original pos (weaponHolder.pos = Vec3.Zero)
+			Weapon weapon = weaponHolder.GetActiveWeapon();
+			weaponHolder.Position = Vector3.Zero;
+			weaponHolder.Rotation = Vector3.Zero;
+			weapon.Position = Vector3.Zero;
+			weapon.Rotation = Vector3.Zero;
+			
+			// 2. Get the weapon aim position offset to camera (camera.ToLocal(something?))
+			Vector3 offset = camera.ToLocal(weapon.GetNode<Marker3D>("SightPosition").GlobalTransform.Origin);
+
+			// 3. Set the position
+			isAiming = true;
+			currentAimOffset = offset;
+			stancePosition.Position -= offset;
+		}
+		else {
+			isAiming = false;
+			stancePosition.GlobalPosition = readyPosition.GlobalPosition;
+			currentAimOffset = Vector3.Zero;
+		}
+		GD.Print(isAiming);
+	}
+
+	private void HandleAiming(double delta) {
+		// if 
 	}
 
 }

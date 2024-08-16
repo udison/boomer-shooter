@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Weapon : Node3D
 {
@@ -8,6 +9,8 @@ public partial class Weapon : Node3D
 	[Export(PropertyHint.Range, "0,2000,1")] protected float fireRate = 550.0f; // rounds/attacks per minute
 	[Export] protected int clipSize = 16;
 	[Export] protected int remainingAmmo = 320;
+	[Export] protected Vector3 aimingPosition = new Vector3(0.003f, -.054f, -.226f);
+	[Export] protected Godot.Collections.Array<GpuParticles3D> particles = new Godot.Collections.Array<GpuParticles3D>();
 
 	protected EWeaponState state = EWeaponState.DRAWING;
 
