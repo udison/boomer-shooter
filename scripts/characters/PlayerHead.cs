@@ -87,7 +87,9 @@ public partial class PlayerHead : Node3D
 			);
 		}
 		else {
-			time = 0;
+			if (time > 0) time -= (float)delta;
+			else time = 0;
+
 			camera.Position = camera.Position.Lerp(Vector3.Zero, (float)delta * 3);
 			
 			if (camera.Position.DistanceTo(Vector3.Zero) <= .001f) {
