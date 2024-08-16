@@ -36,10 +36,11 @@ public partial class PlayerHead : Node3D
 	[Export] public float weaponBobAmplitude = .01f;
 	[Export] public float weaponBobFrequency = 15f;
 
-	[ExportCategory("Weapon Bob")]
-	[Export] public float aimVelocity = 5f;
+	/// <summary>Duration of the aiming transition in seconds</summary>
+	[ExportCategory("Aiming")]
+	[Export] public float aimDuration = .4f;
 	private bool isAiming = false;
-	private Vector3 currentAimOffset = Vector3.Zero;
+	private Tween activeStanceTween = null;
 
 	public override void _Ready() {
 		player = GetParent<Player>();
@@ -67,6 +68,8 @@ public partial class PlayerHead : Node3D
 		HandleAiming(delta);
 	}
 
+
+	#region Head juice
 	private void HeadBob(double delta) {
 		if (!enableHeadBob) return;
 
@@ -102,7 +105,9 @@ public partial class PlayerHead : Node3D
 			Mathf.Lerp(camera.Rotation.Z, -player.GetPlanarMotion().X * Mathf.DegToRad(headTiltAngle), (float)delta * 4.0f)
 		);
 	}
+	#endregion
 
+	#region Weapon juice
 	private void WeaponTilt(double delta) {
 		Vector3 target = new Vector3(
 			weaponHolder.Rotation.X,
@@ -154,42 +159,53 @@ public partial class PlayerHead : Node3D
 			}
 		}
 	}
+	#endregion
 
+	#region Aiming
 	private void ToggleAim() {
-		// isAiming = !isAiming;
+		// Set weapon position and rotation back to the original pos (so weapon sway, tilt and bob dont mess with aiming position)
+		Weapon weapon = weaponHolder.GetActiveWeapon();
+		weaponHolder.Position = Vector3.Zero;
+		weaponHolder.Rotation = Vector3.Zero;
+		weapon.Position = Vector3.Zero;
+		weapon.Rotation = Vector3.Zero;
 
 		if (!isAiming) {
-			// Vector3 offset = ToLocal(weaponHolder.GetActiveWeapon().GetNode<Marker3D>("SightPosition").GlobalPosition);
-
-			// isAiming = true;
-			// currentAimOffset = offset;
-			// weaponHolder.GlobalPosition -= offset;
-
-			// 1. Set weapon position back to the original pos (weaponHolder.pos = Vec3.Zero)
-			Weapon weapon = weaponHolder.GetActiveWeapon();
-			weaponHolder.Position = Vector3.Zero;
-			weaponHolder.Rotation = Vector3.Zero;
-			weapon.Position = Vector3.Zero;
-			weapon.Rotation = Vector3.Zero;
-			
-			// 2. Get the weapon aim position offset to camera (camera.ToLocal(something?))
-			Vector3 offset = camera.ToLocal(weapon.GetNode<Marker3D>("SightPosition").GlobalTransform.Origin);
-
-			// 3. Set the position
 			isAiming = true;
-			currentAimOffset = offset;
-			stancePosition.Position -= offset;
+
+			// Offset from weapon aim position to camera center
+			Vector3 offset = camera.ToLocal(weapon.GetNode<Marker3D>("SightPosition").GlobalTransform.Origin);
+			TweenStance(stancePosition.Position - offset, aimDuration);
 		}
 		else {
 			isAiming = false;
-			stancePosition.GlobalPosition = readyPosition.GlobalPosition;
-			currentAimOffset = Vector3.Zero;
+			
+			// Offset from weapon position to ready stance position
+			Vector3 offset = readyPosition.ToLocal(weapon.GlobalTransform.Origin);
+			TweenStance(stancePosition.Position - offset, aimDuration);
 		}
-		GD.Print(isAiming);
+	}
+
+	private void TweenStance(
+		Vector3 target,
+		float duration,
+		Tween.TransitionType transition = Tween.TransitionType.Circ,
+		Tween.EaseType easing = Tween.EaseType.Out
+	) {
+		if (activeStanceTween != null && activeStanceTween.IsRunning()) {
+			activeStanceTween.Kill();
+		}
+
+		activeStanceTween = GetTree().CreateTween();
+		activeStanceTween
+			.TweenProperty(stancePosition, "position", target, duration)
+			.SetTrans(transition)
+			.SetEase(easing);
 	}
 
 	private void HandleAiming(double delta) {
 		// if 
 	}
+	#endregion
 
 }
