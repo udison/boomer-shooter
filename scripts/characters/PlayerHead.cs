@@ -164,6 +164,8 @@ public partial class PlayerHead : Node3D
 	#region Aiming
 	private void ToggleAim() {
 		// Set weapon position and rotation back to the original pos (so weapon sway, tilt and bob dont mess with aiming position)
+		// TODO: [IMPROVEMENT] This causes a very subtle flick, barely visible but it is there. 
+		//       Would be better if some vector magic was done on offset calculation below instead.
 		Weapon weapon = weaponHolder.GetActiveWeapon();
 		weaponHolder.Position = Vector3.Zero;
 		weaponHolder.Rotation = Vector3.Zero;
@@ -196,6 +198,7 @@ public partial class PlayerHead : Node3D
 			activeStanceTween.Kill();
 		}
 
+		// Important note: stance tweening MUST NOT use global position, always local
 		activeStanceTween = GetTree().CreateTween();
 		activeStanceTween
 			.TweenProperty(stancePosition, "position", target, duration)
