@@ -71,6 +71,9 @@ public partial class PlayerHead : Node3D
 		HandleAiming(delta);
 	}
 
+	public WeaponHolder GetWeaponHolder() {
+		return weaponHolder;
+	}
 
 	#region Head juice
 	private void HeadBob(double delta) {

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/characters/Player.cs" id="1_j3uwf"]
 [ext_resource type="Script" path="res://scripts/characters/PlayerHead.cs" id="2_01xf4"]
 [ext_resource type="Script" path="res://scripts/characters/WeaponHolder.cs" id="3_bbgko"]
-[ext_resource type="PackedScene" uid="uid://8jbcx328wa53" path="res://scenes/items/beretta_m9.tscn" id="3_ienkl"]
+[ext_resource type="PackedScene" uid="uid://8jbcx328wa53" path="res://scenes/weapons/beretta_m9.tscn" id="3_ienkl"]
 [ext_resource type="PackedScene" uid="uid://bwht01rnbphya" path="res://scenes/characters/arms.tscn" id="4_0er73"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mlv1t"]
@@ -33,6 +33,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.124, -0.35061)
 script = ExtResource("3_bbgko")
 
 [node name="Weapon" parent="Head/Camera/StancePosition/WeaponHolder" instance=ExtResource("3_ienkl")]
+
+[node name="TGT_R_Palm" parent="Head/Camera/StancePosition/WeaponHolder/Weapon" index="3"]
+visible = true
+
+[node name="SightPosition" parent="Head/Camera/StancePosition/WeaponHolder/Weapon" index="4"]
+visible = true
 
 [node name="Arms" parent="Head/Camera" instance=ExtResource("4_0er73")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.0880842, 0)
@@ -89,9 +95,15 @@ target_node = NodePath("../../../../StancePosition/WeaponHolder/Weapon/TGT_R_Pal
 
 [node name="ReadyPosition" type="Marker3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.124, -0.35061)
+visible = false
+
+[node name="AlternateReadyPosition" type="Marker3D" parent="Head/Camera"]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 0.0258597, -0.124, -0.260035)
+visible = false
 
 [node name="SafePosition" type="Marker3D" parent="Head/Camera"]
 transform = Transform3D(0.637747, -0.462342, 0.616051, 0, 0.79981, 0.600253, -0.770246, -0.382809, 0.510076, -0.119461, -0.169174, -0.312166)
+visible = false
 
 [editable path="Head/Camera/StancePosition/WeaponHolder/Weapon"]
 [editable path="Head/Camera/StancePosition/WeaponHolder/Weapon/Mesh"]

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh8rfsknticpd"]
+
+[ext_resource type="Script" path="res://scripts/combat/Weapon.cs" id="1_r3fgg"]
+
+[node name="Weapon" type="Node3D"]
+script = ExtResource("1_r3fgg")
+
+[node name="FireRateTimer" type="Timer" parent="."]
+
+[node name="TGT_R_Palm" type="Marker3D" parent="."]
+transform = Transform3D(0.118924, -4.34012e-08, 0.992903, -0.992903, -5.19833e-09, 0.118924, 0, -1, -4.37114e-08, 0.0154288, -0.0422736, 0.157672)
+visible = false
+
+[node name="SightPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000931405, 0.0533102, 0.319997)
+visible = false
+
+[node name="Muzzle" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CasingShute" type="Node3D" parent="."]

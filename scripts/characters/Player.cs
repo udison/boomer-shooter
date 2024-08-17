@@ -9,16 +9,17 @@ public partial class Player : Entity
 	[Export(PropertyHint.Range, "0.01, 5.0, 0.1")] private float sensitivity = .1f;
 
 	#region Nodes
-	private Node3D head;
+	private PlayerHead head;
     #endregion
 
 	private Vector2 lookInput = Vector2.Zero;
+	private Weapon activeWeapon;
 
     public override void _Ready()
     {
         base._Ready();
 
-		head = GetNode<Node3D>("Head");
+		head = GetNode<PlayerHead>("Head");
     }
 
     public override void _Input(InputEvent @event)

@@ -9,19 +9,20 @@ public partial class Weapon : Node3D
 	[Export(PropertyHint.Range, "0,2000,1")] protected float fireRate = 550.0f; // rounds/attacks per minute
 	[Export] protected int clipSize = 16;
 	[Export] protected int remainingAmmo = 320;
-	[Export] protected Vector3 aimingPosition = new Vector3(0.003f, -.054f, -.226f);
-	[Export] protected Godot.Collections.Array<GpuParticles3D> attackParticles = new Godot.Collections.Array<GpuParticles3D>();
+	[Export] protected PackedScene casingParticle;
 
 	protected EWeaponState state = EWeaponState.DRAWING;
 
 	#region Nodes
 	protected AnimationPlayer animationPlayer;
 	protected Timer fireRateTimer;
+	protected Node3D casingShute;
     #endregion
 
 	#region Lifecycle
     public override void _Ready() {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        casingShute = GetNode<Node3D>("CasingShute");
         
 		fireRateTimer = GetNode<Timer>("FireRateTimer");
 		fireRateTimer.WaitTime = 60 / fireRate;
@@ -72,14 +73,18 @@ public partial class Weapon : Node3D
 		SetState(EWeaponState.ATTACKING);
 		PlayAnimation(EWeaponAnimation.ATTACK);
 		fireRateTimer.Start();
-		EmitAttackParticles();
 	}
 
-	public void EmitAttackParticles() {
-		// TODO: Change this to instantiate a rigid body because godot's particle system are complete garbage
-		// foreach (GpuParticles3D particle in attackParticles) {
-		// 	particle.Restart();
-		// }
+	public void EmitCasingParticles() {
+		if (casingParticle != null) {
+			Casing casing = casingParticle.Instantiate<Casing>();
+			GetTree().Root.AddChild(casing);
+
+			casing.GlobalPosition = casingShute.GlobalPosition;
+			casing.GlobalRotation = casingShute.GlobalRotation;
+			casing.ApplyForce(casingShute.GlobalBasis.X * GD.RandRange(50, 300));
+			casing.ApplyTorque(Vector3.Up * GD.RandRange(500, 1500));
+		}
 	}
 
 	#region Callbacks

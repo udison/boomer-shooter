@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwht01rnbphya"]
+[gd_scene load_steps=6 format=3 uid="uid://bwht01rnbphya"]
 
 [ext_resource type="PackedScene" uid="uid://bo3pnvrqqk2f5" path="res://assets/models/entities/arms.glb" id="1_6jt81"]
-[ext_resource type="PackedScene" uid="uid://8jbcx328wa53" path="res://scenes/items/beretta_m9.tscn" id="2_6nyyv"]
 [ext_resource type="Script" path="res://scripts/characters/AutoStartIK.cs" id="2_pvewp"]
 
 [sub_resource type="Animation" id="Animation_v8xjn"]
@@ -1274,6 +1273,3 @@ libraries = {
 "": SubResource("AnimationLibrary_psvi7")
 }
 autoplay = "PISTOL"
-
-[node name="BerettaM9" parent="." index="2" instance=ExtResource("2_6nyyv")]
-visible = false

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://4s4xf6gotuga"]
+
+[ext_resource type="Script" path="res://scripts/combat/Casing.cs" id="1_20py5"]
+[ext_resource type="PackedScene" uid="uid://cswfsdk4d51qf" path="res://assets/models/weapons/9mm_casing.tscn" id="1_j6ku8"]
+
+[node name="9mmCasing" type="RigidBody3D"]
+script = ExtResource("1_20py5")
+
+[node name="Mesh" parent="." instance=ExtResource("1_j6ku8")]

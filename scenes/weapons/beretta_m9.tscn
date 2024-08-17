@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://8jbcx328wa53"]
+[gd_scene load_steps=8 format=3 uid="uid://8jbcx328wa53"]
 
-[ext_resource type="PackedScene" uid="uid://bh8rfsknticpd" path="res://scenes/items/weapon_base.tscn" id="1_mep8o"]
+[ext_resource type="PackedScene" uid="uid://bh8rfsknticpd" path="res://scenes/weapons/weapon_base.tscn" id="1_mep8o"]
 [ext_resource type="PackedScene" uid="uid://boa60pmvng255" path="res://assets/models/weapons/beretta_m9.tscn" id="2_cvypp"]
-[ext_resource type="ArrayMesh" uid="uid://boi42cw3662qs" path="res://assets/particles/9mm_casing.res" id="3_m6vtb"]
+[ext_resource type="PackedScene" uid="uid://4s4xf6gotuga" path="res://scenes/weapons/9mm_casing.tscn" id="2_n8yxi"]
 
 [sub_resource type="Animation" id="Animation_ually"]
 resource_name = "ATTACK"
@@ -85,6 +85,20 @@ tracks/6/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0),
 "points": PackedFloat32Array(0, -0.04, 0, 0.04, 0, 0, -0.04, 0, 0.04, 0, 0, -0.04, 0, 0.04, 0),
 "times": PackedFloat32Array(0.03, 0.1, 0.18)
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.06),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EmitCasingParticles"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_4u2cf"]
@@ -259,42 +273,25 @@ _data = {
 "RESET": SubResource("Animation_bm60g")
 }
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_caf3b"]
-inherit_velocity_ratio = 1.0
-direction = Vector3(1, 0, -1)
-spread = 7.273
-initial_velocity_min = 3.0
-initial_velocity_max = 5.0
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 0.36
-
 [node name="BerettaM9" instance=ExtResource("1_mep8o")]
+displayName = "Beretta M9"
+casingParticle = ExtResource("2_n8yxi")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_darig")
 }
 
-[node name="TGT_R_Palm" type="Marker3D" parent="." index="2"]
-transform = Transform3D(0.118924, -4.34012e-08, 0.992903, -0.992903, -5.19833e-09, 0.118924, 0, -1, -4.37114e-08, 0.0154288, -0.0422736, 0.157672)
-
-[node name="CasingParticle" type="GPUParticles3D" parent="." index="3"]
-transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.28408e-08, 1.11022e-16, -4.28408e-08, -1, -4.37114e-08, 0.00217632, 0.0424703, 0.0456446)
-emitting = false
-amount = 1
-one_shot = true
-fixed_fps = 60
-process_material = SubResource("ParticleProcessMaterial_caf3b")
-draw_pass_1 = ExtResource("3_m6vtb")
-
-[node name="Mesh" parent="." index="4" instance=ExtResource("2_cvypp")]
+[node name="Mesh" parent="." index="2" instance=ExtResource("2_cvypp")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Slider" parent="Mesh" index="0"]
 transform = Transform3D(0.000437662, -5.25233e-08, -8.08119e-08, -8.07818e-08, 2.50797e-07, -0.000437662, 5.25696e-08, 0.000437662, 2.50788e-07, 0.000891931, 0.0396196, -0.00279815)
 
-[node name="SightPosition" type="Marker3D" parent="." index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000931405, 0.0533102, 0.319997)
+[node name="Muzzle" parent="." index="5"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.99595e-08, 0.0381731, -0.228311)
+
+[node name="CasingShute" parent="." index="6"]
+transform = Transform3D(0.775793, -0.630987, 0, 0.630987, 0.775793, 0, 0, 0, 1, -0.00101823, 0.0379707, 0.03215)
 
 [editable path="Mesh"]

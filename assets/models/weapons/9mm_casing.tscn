@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cswfsdk4d51qf"]
+
+[ext_resource type="PackedScene" uid="uid://sf3nq0yycoxy" path="res://assets/models/weapons/9mm_casing.glb" id="1_ogkr4"]
+
+[node name="9mm_casing" instance=ExtResource("1_ogkr4")]
+
+[node name="Casing" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
