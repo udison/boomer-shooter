@@ -82,4 +82,10 @@ fire_stance={
 3d_physics/layer_1="player"
 3d_physics/layer_2="enemy"
 3d_physics/layer_3="world"
-3d_physics/layer_4="pickup"
+3d_physics/layer_4="objects"
+3d_physics/layer_5="effects"
+
+[physics]
+
+common/physics_ticks_per_second=90
+3d/physics_engine="JoltPhysics3D"

@@ -1,9 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://4s4xf6gotuga"]
+[gd_scene load_steps=5 format=3 uid="uid://4s4xf6gotuga"]
 
 [ext_resource type="Script" path="res://scripts/combat/Casing.cs" id="1_20py5"]
 [ext_resource type="PackedScene" uid="uid://cswfsdk4d51qf" path="res://assets/models/weapons/9mm_casing.tscn" id="1_j6ku8"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_44v8g"]
+bounce = 0.11
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_k5w54"]
+height = 0.0166699
+radius = 0.00847482
+
 [node name="9mmCasing" type="RigidBody3D"]
+collision_layer = 16
+collision_mask = 12
+mass = 0.2
+physics_material_override = SubResource("PhysicsMaterial_44v8g")
 script = ExtResource("1_20py5")
 
 [node name="Mesh" parent="." instance=ExtResource("1_j6ku8")]
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_k5w54")

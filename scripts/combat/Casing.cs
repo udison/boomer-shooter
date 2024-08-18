@@ -3,17 +3,17 @@ using System;
 
 public partial class Casing : RigidBody3D
 {
-	private static int LIFETIME = 3 * 60 * 1000; // 3 minutes
+	private static int LIFETIME = 5; // seconds
+
+	SceneTreeTimer timer;
 	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		// TODO: Implement lifetime
-		GD.PrintErr("CASING LIFETIME SHOULD BE IMPLEMENTED");
+	public override void _Ready() {
+		timer = GetTree().CreateTimer(LIFETIME);
+		timer.Timeout += OnLifetimeEnd;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+	public void OnLifetimeEnd() {
+		timer = null;
+		Sleeping = true;
 	}
 }

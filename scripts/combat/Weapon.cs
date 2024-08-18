@@ -82,7 +82,7 @@ public partial class Weapon : Node3D
 
 			casing.GlobalPosition = casingShute.GlobalPosition;
 			casing.GlobalRotation = casingShute.GlobalRotation;
-			casing.ApplyForce(casingShute.GlobalBasis.X * GD.RandRange(50, 300));
+			casing.ApplyForce(casingShute.GlobalBasis.X * GD.RandRange(30, 100));
 			casing.ApplyTorque(Vector3.Up * GD.RandRange(500, 1500));
 		}
 	}
