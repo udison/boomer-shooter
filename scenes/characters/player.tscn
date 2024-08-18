@@ -32,12 +32,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.124, -0.35061)
 [node name="WeaponHolder" type="Node3D" parent="Head/Camera/StancePosition"]
 script = ExtResource("3_bbgko")
 
-[node name="Weapon" parent="Head/Camera/StancePosition/WeaponHolder" instance=ExtResource("3_ienkl")]
+[node name="BerettaM9" parent="Head/Camera/StancePosition/WeaponHolder" instance=ExtResource("3_ienkl")]
 
-[node name="TGT_R_Palm" parent="Head/Camera/StancePosition/WeaponHolder/Weapon" index="3"]
+[node name="TGT_R_Palm" parent="Head/Camera/StancePosition/WeaponHolder/BerettaM9" index="3"]
 visible = true
 
-[node name="SightPosition" parent="Head/Camera/StancePosition/WeaponHolder/Weapon" index="4"]
+[node name="TGT_L_Palm" parent="Head/Camera/StancePosition/WeaponHolder/BerettaM9" index="4"]
+transform = Transform3D(-0.164014, -0.106115, -0.980734, 0.984526, 0.0445808, -0.169472, 0.0617054, -0.993354, 0.0971608, -0.0059178, -0.0660388, 0.162298)
+visible = true
+
+[node name="SightPosition" parent="Head/Camera/StancePosition/WeaponHolder/BerettaM9" index="5"]
 visible = true
 
 [node name="Arms" parent="Head/Camera" instance=ExtResource("4_0er73")]
@@ -46,52 +50,15 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.
 [node name="HumanArm" parent="Head/Camera/Arms" index="0"]
 transform = Transform3D(0.0902174, 0, 0, 0, 0.0902174, 0, 0, 0, 0.0902174, 9.96094e-09, 0, -0.11394)
 
-[node name="Skeleton3D" parent="Head/Camera/Arms/HumanArm" index="0"]
-bones/0/rotation = Quaternion(0, -0.707107, 0, 0.707107)
-bones/1/rotation = Quaternion(-0.706749, 0.0224817, 0.0224817, 0.706749)
-bones/2/rotation = Quaternion(1.77358e-09, -7.295e-09, -0.0661747, 0.997808)
-bones/3/rotation = Quaternion(-5.7408e-10, 7.15427e-10, 0.034417, 0.999408)
-bones/4/rotation = Quaternion(-0.0667697, -0.000242788, 0.0285479, 0.99736)
-bones/5/rotation = Quaternion(-0.0260988, 0.000445799, -0.00996456, 0.99961)
-bones/6/rotation = Quaternion(-0.0330722, -0.00121005, -0.0218051, 0.999214)
-bones/7/rotation = Quaternion(-0.0650718, -0.00023208, 0.0130967, 0.997795)
-bones/8/rotation = Quaternion(-0.0386814, -6.3075e-05, -0.00759922, 0.999223)
-bones/9/rotation = Quaternion(-0.0079554, 7.87036e-06, 0.000432529, 0.999968)
-bones/10/rotation = Quaternion(-0.0764924, 3.93297e-05, -0.00549829, 0.997055)
-bones/11/rotation = Quaternion(-0.0330718, 0.000229721, 0.00611425, 0.999434)
-bones/12/rotation = Quaternion(-0.0234663, -1.50482e-05, -0.0050348, 0.999712)
-bones/13/rotation = Quaternion(-0.0685623, 0.00203655, -0.0146615, 0.997537)
-bones/14/rotation = Quaternion(-0.0455409, -0.000499219, -0.0149429, 0.998851)
-bones/15/rotation = Quaternion(-0.0189705, 6.86768e-05, 0.0069939, 0.999796)
-bones/16/rotation = Quaternion(-0.0962269, 0.00590646, -0.238123, 0.966438)
-bones/17/rotation = Quaternion(-0.0206479, -0.0010085, 0.0419064, 0.998908)
-bones/18/rotation = Quaternion(0.0197688, 0.000976019, 0.0813232, 0.996491)
-bones/19/rotation = Quaternion(-0.0224817, 0.706749, 0.706749, 0.0224817)
-bones/20/rotation = Quaternion(1.64092e-09, -2.75909e-09, 0.0661747, 0.997808)
-bones/21/rotation = Quaternion(-9.24987e-10, 6.85556e-10, -0.034417, 0.999408)
-bones/22/rotation = Quaternion(-0.0667697, 0.000242789, -0.0285479, 0.99736)
-bones/23/rotation = Quaternion(-0.0260988, -0.0004458, 0.00996456, 0.99961)
-bones/24/rotation = Quaternion(-0.0330722, 0.00121005, 0.0218051, 0.999214)
-bones/25/rotation = Quaternion(-0.0650718, 0.00023208, -0.0130967, 0.997795)
-bones/26/rotation = Quaternion(-0.0386814, 6.30742e-05, 0.00759923, 0.999223)
-bones/27/rotation = Quaternion(-0.0079554, -7.87019e-06, -0.000432529, 0.999968)
-bones/28/rotation = Quaternion(-0.0764924, -3.93299e-05, 0.00549828, 0.997055)
-bones/29/rotation = Quaternion(-0.0330718, -0.000229721, -0.00611425, 0.999434)
-bones/30/rotation = Quaternion(-0.0234663, 1.50482e-05, 0.0050348, 0.999712)
-bones/31/rotation = Quaternion(-0.0685623, -0.00203655, 0.0146615, 0.997537)
-bones/32/rotation = Quaternion(-0.0455409, 0.00049922, 0.0149429, 0.998851)
-bones/33/rotation = Quaternion(-0.0189705, -6.86764e-05, -0.00699391, 0.999796)
-bones/34/rotation = Quaternion(-0.0962269, -0.00590647, 0.238123, 0.966438)
-bones/35/rotation = Quaternion(-0.0206479, 0.0010085, -0.0419063, 0.998908)
-bones/36/rotation = Quaternion(0.0197688, -0.000976016, -0.0813232, 0.996491)
-bones/38/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
-bones/39/rotation = Quaternion(-0.5, 0.5, 0.5, 0.5)
-bones/40/rotation = Quaternion(8.43214e-09, 0.707107, 0.707107, -5.33851e-08)
-
 [node name="IK_R_Arm" parent="Head/Camera/Arms/HumanArm/Skeleton3D" index="1"]
 use_magnet = true
 magnet = Vector3(-2.415, -2.17, 0)
-target_node = NodePath("../../../../StancePosition/WeaponHolder/Weapon/TGT_R_Palm")
+target_node = NodePath("../../../../StancePosition/WeaponHolder/BerettaM9/TGT_R_Palm")
+
+[node name="IK_L_Arm" parent="Head/Camera/Arms/HumanArm/Skeleton3D" index="2"]
+use_magnet = true
+magnet = Vector3(2.855, -3.525, 0)
+target_node = NodePath("../../../../StancePosition/WeaponHolder/BerettaM9/TGT_L_Palm")
 
 [node name="ReadyPosition" type="Marker3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.124, -0.35061)
@@ -105,6 +72,6 @@ visible = false
 transform = Transform3D(0.637747, -0.462342, 0.616051, 0, 0.79981, 0.600253, -0.770246, -0.382809, 0.510076, -0.119461, -0.169174, -0.312166)
 visible = false
 
-[editable path="Head/Camera/StancePosition/WeaponHolder/Weapon"]
-[editable path="Head/Camera/StancePosition/WeaponHolder/Weapon/Mesh"]
+[editable path="Head/Camera/StancePosition/WeaponHolder/BerettaM9"]
+[editable path="Head/Camera/StancePosition/WeaponHolder/BerettaM9/Mesh"]
 [editable path="Head/Camera/Arms"]

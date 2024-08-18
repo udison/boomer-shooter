@@ -288,10 +288,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 [node name="Slider" parent="Mesh" index="0"]
 transform = Transform3D(0.000437662, -5.25233e-08, -8.08119e-08, -8.07818e-08, 2.50797e-07, -0.000437662, 5.25696e-08, 0.000437662, 2.50788e-07, 0.000891931, 0.0396196, -0.00279815)
 
-[node name="Muzzle" parent="." index="5"]
+[node name="TGT_L_Palm" parent="." index="4"]
+transform = Transform3D(-0.164014, -0.106115, -0.980734, 0.984526, 0.0445808, -0.169472, 0.0617054, -0.993354, 0.0971608, -0.0059178, -0.0660388, 0.162298)
+
+[node name="Muzzle" parent="." index="6"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.99595e-08, 0.0381731, -0.228311)
 
-[node name="CasingShute" parent="." index="6"]
+[node name="CasingShute" parent="." index="7"]
 transform = Transform3D(0.775793, -0.630987, 0, 0.630987, 0.775793, 0, 0, 0, 1, -0.00101823, 0.0379707, 0.03215)
 
 [editable path="Mesh"]

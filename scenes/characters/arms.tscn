@@ -1268,6 +1268,12 @@ root_bone = &"R_Biceps"
 tip_bone = &"R_Palm"
 script = ExtResource("2_pvewp")
 
+[node name="IK_L_Arm" type="SkeletonIK3D" parent="HumanArm/Skeleton3D" index="2"]
+transform = Transform3D(11.0843, 0, 0, 0, 11.0843, 0, 0, 0, 11.0843, 0, 0, 0)
+root_bone = &"L_Biceps"
+tip_bone = &"L_Palm"
+script = ExtResource("2_pvewp")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_psvi7")
