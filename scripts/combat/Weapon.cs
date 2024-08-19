@@ -14,6 +14,7 @@ public partial class Weapon : Node3D
 
 	protected EWeaponState state = EWeaponState.DRAWING;
 	protected static PackedScene DEBUG_HIT_MARKER = GD.Load<PackedScene>("res://scenes/debug/debug_hit_marker.tscn");
+	protected static int DEBUG_HIT_MARKER_LIFETIME = 5; // seconds
 
 	#region Nodes
 	protected AnimationPlayer animationPlayer;
@@ -76,15 +77,26 @@ public partial class Weapon : Node3D
 		Vector3 from = attackPoint.GlobalPosition;
 		Vector3 to = from - GlobalTransform.Basis.Z * range; // this is minus because "forward" in Godot is -Z
 
+		// TODO #17: Would be nice to have a helper function that casts this ray and returns a result
+		//             as a "PhysicsRayResult" class. Working with Godot dictionary doesnt make sense here
 		PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(from, to);
 		query.CollideWithBodies = true;
 		Godot.Collections.Dictionary result = GetWorld3D().DirectSpaceState.IntersectRay(query);
 		GD.Print(result.ToString());
 
         if (result.ContainsKey("collider")) {
+			// TODO #17: These would be much better if it was "result.collider" or "result.position" without these odd casts
+			//             BTW why the fuck is IntersectRay() result a fucking dict ???? 
             Vector3 position = (Vector3)result["position"];
+            Vector3 normal = (Vector3)result["normal"];
+            Node3D collider = (Node3D)result["collider"];
 
-        	SpawnDebugHitMarker(position, GlobalRotation);
+			if (collider is RigidBody3D rigidBody3D) {
+				rigidBody3D.ApplyForce(normal * -100 * damage, position);
+			}
+
+			// TODO #18: Add option to turn this on/off in debug console
+        	// SpawnDebugHitMarker(position, GlobalRotation);
         }
 	}
 
@@ -93,6 +105,8 @@ public partial class Weapon : Node3D
 		GetTree().Root.AddChild(instance);
 		instance.GlobalPosition = position;
 		instance.GlobalRotation = rotation;
+
+		GetTree().CreateTimer(DEBUG_HIT_MARKER_LIFETIME).Timeout += () => instance.QueueFree();
 	}
 
 	public void EmitCasingParticles() {
