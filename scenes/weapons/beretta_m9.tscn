@@ -297,4 +297,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.995
 [node name="CasingShute" parent="." index="7"]
 transform = Transform3D(0.775793, -0.630987, 0, 0.630987, 0.775793, 0, 0, 0, 1, -0.00101823, 0.0379707, 0.03215)
 
+[node name="AttackPoint" parent="." index="8"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.99774e-08, 0.0401926, -0.228515)
+
 [editable path="Mesh"]

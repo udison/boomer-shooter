@@ -9,6 +9,7 @@ public partial class PlayerHead : Node3D
 	private Node3D stancePosition;
 	private WeaponHolder weaponHolder;
 	private Node3D readyPosition;
+	private Node3D alternateReadyPosition;
 	private Node3D safePosition;
 	#endregion
 
@@ -43,7 +44,9 @@ public partial class PlayerHead : Node3D
 	[ExportCategory("Aiming")]
 	[Export] public float aimDuration = .4f;
 	private bool isAiming = false;
-	private Tween activeStanceTween = null;
+	private Tween activeStancePositionTween = null;
+	private Tween activeStanceRotationTween = null;
+	private Node3D activeFireStance;
 
 	public override void _Ready() {
 		player = GetParent<Player>();
@@ -51,13 +54,19 @@ public partial class PlayerHead : Node3D
 		stancePosition = camera.GetNode<Node3D>("StancePosition");
 		weaponHolder = stancePosition.GetNode<WeaponHolder>("WeaponHolder");
 		readyPosition = camera.GetNode<Node3D>("ReadyPosition");
+		alternateReadyPosition = camera.GetNode<Node3D>("AlternateReadyPosition");
 		safePosition = camera.GetNode<Node3D>("SafePosition");
+		activeFireStance = readyPosition;
 	}
 
     public override void _Process(double delta)
     {
         if (Input.IsActionJustPressed("secondary")) {
 			ToggleAim();
+		}
+
+		if (Input.IsActionJustPressed("change_fire_stance")) {
+			ChangeFireStance();
 		}
     }
 
@@ -68,7 +77,6 @@ public partial class PlayerHead : Node3D
 		WeaponTilt(delta);
 		WeaponSway(delta);
 		WeaponBob(delta);
-		HandleAiming(delta);
 	}
 
 	public WeaponHolder GetWeaponHolder() {
@@ -172,7 +180,7 @@ public partial class PlayerHead : Node3D
 	#region Aiming
 	private void ToggleAim() {
 		// Set weapon position and rotation back to the original pos (so weapon sway, tilt and bob dont mess with aiming position)
-		// TODO: [IMPROVEMENT] This causes a very subtle flick, barely visible but it is there. 
+		// TODO: #11 [IMPROVEMENT] This causes a very subtle flick, barely visible but it is there. 
 		//       Would be better if some vector magic was done on offset calculation below instead.
 		Weapon weapon = weaponHolder.GetActiveWeapon();
 		weaponHolder.Position = Vector3.Zero;
@@ -185,37 +193,50 @@ public partial class PlayerHead : Node3D
 
 			// Offset from weapon aim position to camera center
 			Vector3 offset = camera.ToLocal(weapon.GetNode<Marker3D>("SightPosition").GlobalTransform.Origin);
-			TweenStance(stancePosition.Position - offset, aimDuration);
+			TweenStance(stancePosition.Position - offset, Vector3.Zero, aimDuration);
 		}
 		else {
 			isAiming = false;
 			
 			// Offset from weapon position to ready stance position
-			Vector3 offset = readyPosition.ToLocal(weapon.GlobalTransform.Origin);
-			TweenStance(stancePosition.Position - offset, aimDuration);
+			TweenStance(activeFireStance.Position, activeFireStance.Rotation, aimDuration);
 		}
 	}
 
+	private void ChangeFireStance() {
+		if (activeFireStance == readyPosition) activeFireStance = alternateReadyPosition;
+		else if (activeFireStance == alternateReadyPosition) activeFireStance = safePosition;
+
+		// TODO: Make safePosition active by holding B instead of cycling to it
+		else if (activeFireStance == safePosition) activeFireStance = readyPosition;
+
+		TweenStance(activeFireStance.Position, activeFireStance.Rotation, aimDuration);
+	}
+
 	private void TweenStance(
-		Vector3 target,
+		Vector3 targetPosition,
+		Vector3 targetRotation,
 		float duration,
 		Tween.TransitionType transition = Tween.TransitionType.Circ,
 		Tween.EaseType easing = Tween.EaseType.Out
 	) {
-		if (activeStanceTween != null && activeStanceTween.IsRunning()) {
-			activeStanceTween.Kill();
+		if (activeStancePositionTween != null && activeStancePositionTween.IsRunning()) {
+			activeStancePositionTween.Kill();
+			activeStanceRotationTween.Kill();
 		}
 
 		// Important note: stance tweening MUST NOT use global position, always local
-		activeStanceTween = GetTree().CreateTween();
-		activeStanceTween
-			.TweenProperty(stancePosition, "position", target, duration)
+		activeStancePositionTween = GetTree().CreateTween();
+		activeStancePositionTween
+			.TweenProperty(stancePosition, "position", targetPosition, duration)
 			.SetTrans(transition)
 			.SetEase(easing);
-	}
-
-	private void HandleAiming(double delta) {
-		// if 
+		
+		activeStanceRotationTween = GetTree().CreateTween();
+		activeStanceRotationTween
+			.TweenProperty(stancePosition, "rotation", targetRotation, duration)
+			.SetTrans(transition)
+			.SetEase(easing);
 	}
 	#endregion
 

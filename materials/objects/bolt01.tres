@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cgmtpjfl0tmum"]
+
+[ext_resource type="Texture2D" uid="uid://dflc1mq4l5kwx" path="res://assets/textures/bolt01.png" id="1_2t7xk"]
+[ext_resource type="Texture2D" uid="uid://dh6qm1fc13yqt" path="res://assets/textures/black_metal01_normal.png" id="2_wfpxc"]
+
+[resource]
+albedo_texture = ExtResource("1_2t7xk")
+metallic = 0.49
+metallic_specular = 0.24
+roughness = 0.6
+normal_texture = ExtResource("2_wfpxc")
+texture_filter = 0

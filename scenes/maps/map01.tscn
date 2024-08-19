@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgghyseoksnk3"]
+[gd_scene load_steps=4 format=3 uid="uid://cgghyseoksnk3"]
 
 [ext_resource type="Material" uid="uid://sejl02qieb2y" path="res://materials/debug/grid01.tres" id="1_3sff5"]
+[ext_resource type="PackedScene" uid="uid://by72f33rr5157" path="res://scenes/objects/target01.tscn" id="2_7n2bk"]
 
 [sub_resource type="Environment" id="Environment_46nc3"]
 
@@ -21,3 +22,6 @@ collision_layer = 4
 collision_mask = 27
 size = Vector3(10, 0.1, 10)
 material = ExtResource("1_3sff5")
+
+[node name="Target" parent="." instance=ExtResource("2_7n2bk")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 0, 0, -3)

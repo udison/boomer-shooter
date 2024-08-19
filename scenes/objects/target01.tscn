@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://by72f33rr5157"]
+
+[ext_resource type="PackedScene" uid="uid://dssdjiqxfiggg" path="res://assets/models/objects/target_stand.glb" id="1_i1m2b"]
+[ext_resource type="PackedScene" uid="uid://cg0itw85tu22a" path="res://scenes/objects/reactive_target.tscn" id="2_7yys1"]
+
+[node name="Target" type="Node3D"]
+
+[node name="StandMesh" parent="." instance=ExtResource("1_i1m2b")]
+
+[node name="ReactiveTarget" parent="." instance=ExtResource("2_7yys1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0437328, 0.188286, -0.00141685)
+
+[node name="ReactiveTarget2" parent="." instance=ExtResource("2_7yys1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0437328, 0.46946, -0.00141685)
+
+[node name="ReactiveTarget3" parent="." instance=ExtResource("2_7yys1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0437328, 0.755783, -0.00141685)
+
+[node name="ReactiveTarget4" parent="." instance=ExtResource("2_7yys1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0437328, 1.0451, -0.00141685)
+
+[node name="ReactiveTarget5" parent="." instance=ExtResource("2_7yys1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0437328, 1.31925, -0.00141685)
