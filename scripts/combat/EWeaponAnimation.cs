@@ -1,5 +1,7 @@
 public enum EWeaponAnimation {
     READY,
     ATTACK,
-    RELOAD
+    ATTACK_TO_EMPTY,
+    RELOAD,
+    EMPTY
 }

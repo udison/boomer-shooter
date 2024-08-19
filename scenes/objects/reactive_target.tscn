@@ -14,6 +14,9 @@ radius = 0.0892975
 [node name="Hinge" type="JoltHingeJoint3D" parent="."]
 limit_enabled = true
 limit_upper = 3.14159
+limit_spring_enabled = true
+limit_spring_frequency = 1000.0
+limit_spring_damping = 1000.0
 node_a = NodePath("..")
 node_b = NodePath("../Target")
 transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 0, 0)

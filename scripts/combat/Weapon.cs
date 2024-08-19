@@ -13,6 +13,7 @@ public partial class Weapon : Node3D
 	[Export] protected PackedScene casingParticle;
 
 	protected EWeaponState state = EWeaponState.DRAWING;
+	protected int rounds = 3;
 	protected static PackedScene DEBUG_HIT_MARKER = GD.Load<PackedScene>("res://scenes/debug/debug_hit_marker.tscn");
 	protected static int DEBUG_HIT_MARKER_LIFETIME = 5; // seconds
 
@@ -43,6 +44,7 @@ public partial class Weapon : Node3D
     }
     #endregion
 
+	#region Animation
     protected void SetState(EWeaponState newState) {
 		state = newState;
 	}
@@ -63,14 +65,34 @@ public partial class Weapon : Node3D
 		animationPlayer.Play("RESET");
 		animationPlayer.Play(animName);
 	}
+	#endregion
 
+	#region Attack
 	public virtual void Attack() {
+		if (state == EWeaponState.EMPTY) {
+			PlayAnimation(EWeaponAnimation.EMPTY);
+		}
+
 		if (state != EWeaponState.READY) return;
 
 		SetState(EWeaponState.ATTACKING);
-		PlayAnimation(EWeaponAnimation.ATTACK);
 		fireRateTimer.Start();
 		CastAttackRay();
+		CheckRounds();
+		GD.Print("Here");
+	}
+
+	protected virtual void CheckRounds() {
+		rounds--;
+
+		if (rounds <= 0) {
+			SetState(EWeaponState.EMPTY);
+			PlayAnimation(EWeaponAnimation.ATTACK_TO_EMPTY);
+			GD.Print("State set to " + state);
+		}
+		else {
+			PlayAnimation(EWeaponAnimation.ATTACK);
+		}
 	}
 
 	protected virtual void CastAttackRay() {
@@ -82,7 +104,6 @@ public partial class Weapon : Node3D
 		PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(from, to);
 		query.CollideWithBodies = true;
 		Godot.Collections.Dictionary result = GetWorld3D().DirectSpaceState.IntersectRay(query);
-		GD.Print(result.ToString());
 
         if (result.ContainsKey("collider")) {
 			// TODO #17: These would be much better if it was "result.collider" or "result.position" without these odd casts
@@ -92,7 +113,7 @@ public partial class Weapon : Node3D
             Node3D collider = (Node3D)result["collider"];
 
 			if (collider is RigidBody3D rigidBody3D) {
-				rigidBody3D.ApplyForce(normal * -100 * damage, position);
+				rigidBody3D.ApplyForce(-normal * 100 * damage, position);
 			}
 
 			// TODO #18: Add option to turn this on/off in debug console
@@ -120,6 +141,7 @@ public partial class Weapon : Node3D
 			casing.ApplyTorque(Vector3.Up * GD.RandRange(500, 1500));
 		}
 	}
+	#endregion
 
 	#region Callbacks
 	protected void OnDrawEnd() {
@@ -127,6 +149,8 @@ public partial class Weapon : Node3D
 	}
 
 	protected void OnAttackEnd() {
+		if (state != EWeaponState.ATTACKING) return;
+
 		SetState(EWeaponState.READY);
 	}
 	#endregion
