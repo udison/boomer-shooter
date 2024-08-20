@@ -14,6 +14,6 @@ public partial class Casing : RigidBody3D
 
 	public void OnLifetimeEnd() {
 		timer = null;
-		Sleeping = true;
+		Freeze = true;
 	}
 }

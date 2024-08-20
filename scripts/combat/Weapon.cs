@@ -11,9 +11,10 @@ public partial class Weapon : Node3D
 	[Export] protected int clipSize = 16;
 	[Export] protected int remainingAmmo = 320;
 	[Export] protected PackedScene casingParticle;
+	[Export] protected PackedScene magazineScene;
 
 	protected EWeaponState state = EWeaponState.DRAWING;
-	protected int rounds = 3;
+	protected int rounds;
 	protected static PackedScene DEBUG_HIT_MARKER = GD.Load<PackedScene>("res://scenes/debug/debug_hit_marker.tscn");
 	protected static int DEBUG_HIT_MARKER_LIFETIME = 5; // seconds
 
@@ -22,13 +23,18 @@ public partial class Weapon : Node3D
 	protected Timer fireRateTimer;
 	protected Node3D casingShute;
 	protected Node3D attackPoint;
+	protected Node3D magazinePosition;
+	protected Magazine currentMag;
     #endregion
 
 	#region Lifecycle
     public override void _Ready() {
+		rounds = clipSize;
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         casingShute = GetNode<Node3D>("CasingShute");
 		attackPoint = GetNode<Node3D>("AttackPoint");
+		magazinePosition = GetNode<Node3D>("MagazinePosition");
+		InstantiateMagazine();
         
 		fireRateTimer = GetNode<Timer>("FireRateTimer");
 		fireRateTimer.WaitTime = 60 / fireRate;
@@ -38,8 +44,13 @@ public partial class Weapon : Node3D
     }
 
     public override void _Input(InputEvent @event) {
+		// TODO: Move this input checks to player and comunicate by signals
         if (Input.IsActionJustPressed("primary")) {
 			Attack();
+		}
+		
+        if (Input.IsActionJustPressed("reload")) {
+			StartReload();
 		}
     }
     #endregion
@@ -79,7 +90,6 @@ public partial class Weapon : Node3D
 		fireRateTimer.Start();
 		CastAttackRay();
 		CheckRounds();
-		GD.Print("Here");
 	}
 
 	protected virtual void CheckRounds() {
@@ -143,6 +153,41 @@ public partial class Weapon : Node3D
 	}
 	#endregion
 
+	#region Reload
+	protected void StartReload() {
+		if (rounds == clipSize || remainingAmmo <= 0) return;
+
+		SetState(EWeaponState.RELOADING);
+		PlayAnimation(EWeaponAnimation.RELOAD);
+	}
+
+	protected void ReleaseMagazine() {
+		if (currentMag == null) return;
+
+		magazinePosition.RemoveChild(currentMag);
+		GetTree().Root.AddChild(currentMag);
+		currentMag.GlobalPosition = magazinePosition.GlobalPosition;
+		currentMag.GlobalRotation = magazinePosition.GlobalRotation;
+		currentMag.Release();
+		currentMag = null;
+	}
+	#endregion
+
+	#region Magazine
+	protected void InstantiateMagazine() {
+		if (magazineScene == null) {
+			GD.PushWarning("[Weapon] Magazine scene is null for " + Name);
+		}
+
+		currentMag = magazineScene.Instantiate<Magazine>();
+		currentMag.weapon = this;
+		magazinePosition.AddChild(currentMag);
+		currentMag.Position = Vector3.Zero;
+		currentMag.Rotation = Vector3.Zero;
+		currentMag.Freeze = true;
+	}
+	#endregion
+
 	#region Callbacks
 	protected void OnDrawEnd() {
 		SetState(EWeaponState.READY);
@@ -151,6 +196,26 @@ public partial class Weapon : Node3D
 	protected void OnAttackEnd() {
 		if (state != EWeaponState.ATTACKING) return;
 
+		SetState(EWeaponState.READY);
+	}
+
+	protected void OnReloadEnd() {
+		// max 15 | curr 10 | remaining 100
+		// max - curr = delta
+		// remaining - delta
+
+		int delta = clipSize - rounds;
+
+		if (delta <= remainingAmmo) {
+			rounds += delta;
+			remainingAmmo -= delta;
+		}
+		else {
+			rounds = remainingAmmo;
+			remainingAmmo = 0;
+		}
+
+		PlayAnimation(EWeaponAnimation.RESET);
 		SetState(EWeaponState.READY);
 	}
 	#endregion

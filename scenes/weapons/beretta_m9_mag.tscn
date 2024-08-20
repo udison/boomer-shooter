@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8uavujfbv6k0"]
+
+[ext_resource type="Script" path="res://scripts/combat/Magazine.cs" id="1_7yjt4"]
+[ext_resource type="PackedScene" uid="uid://vqbexrkdy61q" path="res://assets/models/weapons/beretta_m9_mag.glb" id="1_hqaxo"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pftn0"]
+bounce = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hq7i0"]
+size = Vector3(0.0185547, 0.0926056, 0.0258789)
+
+[node name="BerettaM9Magazine" type="RigidBody3D"]
+collision_layer = 16
+collision_mask = 12
+mass = 0.5
+physics_material_override = SubResource("PhysicsMaterial_pftn0")
+freeze = true
+script = ExtResource("1_7yjt4")
+
+[node name="Mesh" parent="." instance=ExtResource("1_hqaxo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000463039, 0, 0)
+
+[node name="Shape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.960045, -0.279846, 0, 0.279846, 0.960045, 0, -3.91179e-05, -0.000344214)
+shape = SubResource("BoxShape3D_hq7i0")

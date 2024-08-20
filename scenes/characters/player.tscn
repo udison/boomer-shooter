@@ -38,6 +38,7 @@ script = ExtResource("3_bbgko")
 visible = true
 
 [node name="TGT_L_Palm" parent="Head/Camera/StancePosition/WeaponHolder/BerettaM9" index="4"]
+transform = Transform3D(-0.164688, -0.106901, -0.980536, 0.984393, 0.044701, -0.170209, 0.0620264, -0.993264, 0.0978705, -0.0059178, -0.0660388, 0.162298)
 visible = true
 
 [node name="SightPosition" parent="Head/Camera/StancePosition/WeaponHolder/BerettaM9" index="5"]

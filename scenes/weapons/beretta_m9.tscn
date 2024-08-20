@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://8jbcx328wa53"]
+[gd_scene load_steps=12 format=3 uid="uid://8jbcx328wa53"]
 
 [ext_resource type="PackedScene" uid="uid://bh8rfsknticpd" path="res://scenes/weapons/weapon_base.tscn" id="1_mep8o"]
 [ext_resource type="PackedScene" uid="uid://boa60pmvng255" path="res://assets/models/weapons/beretta_m9.tscn" id="2_cvypp"]
 [ext_resource type="PackedScene" uid="uid://4s4xf6gotuga" path="res://scenes/weapons/9mm_casing.tscn" id="2_n8yxi"]
+[ext_resource type="PackedScene" uid="uid://b8uavujfbv6k0" path="res://scenes/weapons/beretta_m9_mag.tscn" id="4_qf5kt"]
 
 [sub_resource type="Animation" id="Animation_ually"]
 resource_name = "ATTACK"
@@ -277,6 +278,66 @@ tracks/7/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("MagazinePosition:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.41781e-09, -0.0366132, 0.0759491)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("MagazinePosition:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.14159, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("TGT_L_Palm:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.171042, -1.47131, 1.52542)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("TGT_L_Palm:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.0059178, -0.0660388, 0.162298)]
+}
 
 [sub_resource type="Animation" id="Animation_14yfi"]
 resource_name = "EMPTY"
@@ -392,18 +453,117 @@ tracks/7/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_kmq7t"]
+resource_name = "RELOAD"
+length = 2.1333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1.23333, 1.36667, 1.53333, 1.7, 2.06667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 0.574351, 0.574351, 0.574351, 1, 0.574351, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.00130065, 0.017059, 0.00917879), Vector3(0.00539597, 0.0248927, 0.0317066), Vector3(0.00539597, 0.0248927, 0.0317066), Vector3(0.00539597, 0.0248927, 0.0317066), Vector3(-0.0537563, 0.0390979, -0.0201158), Vector3(-0.0537563, 0.0390979, -0.0201158), Vector3(-0.0485657, 0.0494736, -0.0184782), Vector3(-0.0537563, 0.0390979, -0.0201158), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1.23333, 1.36667, 1.53333, 1.7, 2.06667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 0.574351, 0.574351, 0.574351, 1, 0.574351, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.144814, 0.0215773, 0.20705), Vector3(0.324276, 0.0728941, 0.448412), Vector3(0.324276, 0.0728941, 0.448412), Vector3(0.324276, 0.0728941, 0.448412), Vector3(0.204363, 0.139549, -0.615509), Vector3(0.204363, 0.139549, -0.615509), Vector3(0.082512, 0.240826, -0.607627), Vector3(0.204363, 0.139549, -0.615509), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MagazinePosition:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.466667, 0.533333, 1, 1.26667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1.41781e-09, -0.0366132, 0.0759491), Vector3(1.41781e-09, -0.0366132, 0.0759491), Vector3(-0.142772, -0.191511, 0.137724), Vector3(-0.142772, -0.191511, 0.137724), Vector3(1.41781e-09, -0.0366132, 0.0759491)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MagazinePosition:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.466667, 0.533333, 1, 1.26667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.14159, 0), Vector3(0, -3.14159, 0), Vector3(0.192063, -2.95099, 1.05866), Vector3(0.192063, -2.95099, 1.05866), Vector3(0, -3.14159, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TGT_L_Palm:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 1, 1.26667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.171042, -1.47131, 1.52542), Vector3(-0.651981, -1.26004, 1.55809), Vector3(-1.02685, -1.70753, 1.94857), Vector3(-1.02685, -1.70753, 1.94857), Vector3(0.171042, -1.47131, 1.52542)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TGT_L_Palm:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 1, 1.26667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.0059178, -0.0660388, 0.162298), Vector3(-0.0858929, -0.0979062, 0.165017), Vector3(-0.15019, -0.174516, 0.228253), Vector3(-0.15019, -0.174516, 0.228253), Vector3(-0.0059178, -0.0660388, 0.162298)]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.4, 0.6, 2.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"ReleaseMagazine"
+}, {
+"args": [],
+"method": &"InstantiateMagazine"
+}, {
+"args": [],
+"method": &"OnReloadEnd"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_darig"]
 _data = {
 "ATTACK": SubResource("Animation_ually"),
 "ATTACK_TO_EMPTY": SubResource("Animation_x6vih"),
 "EMPTY": SubResource("Animation_14yfi"),
 "READY": SubResource("Animation_4u2cf"),
+"RELOAD": SubResource("Animation_kmq7t"),
 "RESET": SubResource("Animation_bm60g")
 }
 
 [node name="BerettaM9" instance=ExtResource("1_mep8o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 displayName = "Beretta M9"
 casingParticle = ExtResource("2_n8yxi")
+magazineScene = ExtResource("4_qf5kt")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
@@ -417,7 +577,8 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 transform = Transform3D(0.000437662, -5.25233e-08, -8.08119e-08, -8.07818e-08, 2.50797e-07, -0.000437662, 5.25696e-08, 0.000437662, 2.50788e-07, 0.000891931, 0.0396196, -0.00279815)
 
 [node name="TGT_L_Palm" parent="." index="4"]
-transform = Transform3D(-0.164014, -0.106115, -0.980734, 0.984526, 0.0445808, -0.169472, 0.0617054, -0.993354, 0.0971608, -0.0059178, -0.0660388, 0.162298)
+transform = Transform3D(-0.164688, -0.106901, -0.980536, 0.984393, 0.044701, -0.170209, 0.0620264, -0.993264, 0.0978705, -0.0059178, -0.0660388, 0.162298)
+visible = true
 
 [node name="Muzzle" parent="." index="6"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.99595e-08, 0.0381731, -0.228311)
@@ -427,5 +588,8 @@ transform = Transform3D(0.775793, -0.630987, 0, 0.630987, 0.775793, 0, 0, 0, 1, 
 
 [node name="AttackPoint" parent="." index="8"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.99774e-08, 0.0401926, -0.228515)
+
+[node name="MagazinePosition" parent="." index="9"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 1.41781e-09, -0.0366132, 0.0759491)
 
 [editable path="Mesh"]
